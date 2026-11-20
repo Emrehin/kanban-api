@@ -1,0 +1,13 @@
+services:
+  api:
+    build: .
+    container_name: kanban-api
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - JWT_SECRET=kanban_gizli_imza_anahtari_2026_uzun_metin
+      - DB_PATH=/app/data/kanban.db
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

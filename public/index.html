@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kanban Canlı Akış</title>
+</head>
+<body>
+  <h3>Canlı WebSocket Olayları</h3>
+  <ul id="events"></ul>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const list = document.getElementById('events');
+
+    const logEvent = (type, data) => {
+      const li = document.createElement('li');
+      li.textContent = `[${new Date().toLocaleTimeString()}] ${type}: ${JSON.stringify(data)}`;
+      list.prepend(li);
+    };
+
+    socket.on('task:created', (task) => logEvent('GÖREV EKLENDİ', task));
+    socket.on('task:updated', (task) => logEvent('DURUM GÜNCELLENDİ', task));
+    socket.on('task:deleted', (data) => logEvent('GÖREV SİLİNDİ', data));
+  </script>
+</body>
+</html>
